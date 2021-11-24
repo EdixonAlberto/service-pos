@@ -1,0 +1,9 @@
+# FOLDERS
+node_modules/
+.vscode/
+dist/
+logs/
+
+# FILES
+*.env
+*.log
