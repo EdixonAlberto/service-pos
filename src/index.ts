@@ -1,8 +1,12 @@
-import { LoggerService } from './services/Logger.service'
+import { ServerService } from '~SERVICES/Server.service'
 
-const logger = new LoggerService()
+async function main(): Promise<void> {
+  try {
+    const server = new ServerService()
+    server.start()
+  } catch (error) {
+    console.error(error)
+  }
+}
 
-logger.log(`
-fecha       |  device     |  error
-24/11/2021  |  impresora  |  rodillo atascado
-`)
+main()
