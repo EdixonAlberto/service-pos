@@ -17,6 +17,8 @@ class ServerService {
   }
 
   private middlewaresIN(): void {
+    this.app.use(express.json())
+
     this.app.use('/', (req, _, next) => {
       console.log(`>> ${req.method}: ${req.url}`)
       next()
