@@ -3,6 +3,7 @@ import { createServer } from 'http'
 import { Server } from 'socket.io'
 
 import httpRoutes from '~ROUTES/http.routes'
+import { notFound, errorHandler } from '~MIDDLEWARES'
 
 class ServerService {
   private app = express()
@@ -10,11 +11,12 @@ class ServerService {
   readonly PORT: number = Number(process.env.PORT) || 3000
 
   constructor() {
-    this.middlewares()
+    this.middlewaresIN()
     this.routes()
+    this.middlewaresOUT()
   }
 
-  private middlewares(): void {
+  private middlewaresIN(): void {
     this.app.use('/', (req, _, next) => {
       console.log(`>> ${req.method}: ${req.url}`)
       next()
@@ -22,7 +24,12 @@ class ServerService {
   }
 
   private routes(): void {
-    this.app.use('/', httpRoutes)
+    this.app.use('/pos', httpRoutes)
+  }
+
+  private middlewaresOUT(): void {
+    this.app.use(notFound)
+    this.app.use(errorHandler)
   }
 
   private socket(): void {
@@ -35,12 +42,12 @@ class ServerService {
     })
 
     io.on('connection', () => {})
-    console.log(`>> WebSocket OK`)
+    console.log(`>> WEBSOCKET: listening on ws://localhost:${this.PORT}`)
   }
 
   public start(): void {
     this.httpServer.listen(this.PORT, () => {
-      console.log(`>> Server OK: litening on port ${this.PORT}`)
+      console.log(`>> SERVER_HTTP: listening on http://localhost:${this.PORT}`)
       this.socket()
     })
   }
