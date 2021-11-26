@@ -14,7 +14,7 @@ export async function loadConfig(): Promise<void> {
 
   const _config: TConfig = {
     port: Number(ENV.PORT) || 5000,
-    modeDev: NODE_ENV === 'development',
+    modeDev: NODE_ENV === 'development'
   }
 
   global.config = _config
