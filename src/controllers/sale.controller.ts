@@ -2,13 +2,9 @@ import { Request, Response, NextFunction } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 async function saleController(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const body = req.body as {
-    amount: number
-    code: string
-    error?: boolean // TODO: propiedad temporal para probar el mensaje de error
-  }
+  const body = req.body as TSale['body']
 
-  const date = new Date().toLocaleString('es')
+  const date: string = new Date().toLocaleString('es')
 
   try {
     if (body.error) {
@@ -18,7 +14,7 @@ async function saleController(req: Request, res: Response, next: NextFunction): 
       return
     }
 
-    res.status(StatusCodes.OK).json({
+    res.status(StatusCodes.OK).json(<TSale['response']>{
       Function: 210,
       Response: 'Aprobado',
       'Commerce Code': 550062700310,

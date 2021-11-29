@@ -2,7 +2,7 @@
 
 Micro servicio para controlar y monitorear el POS y la impresora del totem digital.
 
-## Diagrama de diseño
+## Diagrama de Diseño
 
 ![./docs/](./docs/integration-pos.drawio.png)
 
@@ -14,7 +14,7 @@ Micro servicio para controlar y monitorear el POS y la impresora del totem digit
 
 > TODO: falta por crear endpoints
 
-Los datos a enviar en cada peticion estan documentados en los siguientes tipos de typescript:
+Los datos a enviar en cada petición estan documentados en los siguientes tipos de typescript:
 [serverHTTP.d.ts](./src/@types/serverHTTP.d.ts)
 
 ## Endpoints Server Web Socket
