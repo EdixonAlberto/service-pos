@@ -7,13 +7,19 @@ import httpRoutes from '~ROUTES/http.routes'
 class ServerService {
   private app = express()
   private httpServer = createServer(this.app)
+  readonly PORT: number = Number(process.env.PORT) || 3000
 
   constructor() {
     this.middlewares()
     this.routes()
   }
 
-  private middlewares(): void {}
+  private middlewares(): void {
+    this.app.use('/', (req, _, next) => {
+      console.log(`>> ${req.method}: ${req.url}`)
+      next()
+    })
+  }
 
   private routes(): void {
     this.app.use('/', httpRoutes)
@@ -29,13 +35,14 @@ class ServerService {
     })
 
     io.on('connection', () => {})
-    console.log(`>> Socket OK`)
+    console.log(`>> WebSocket OK`)
   }
 
   public start(): void {
-    this.httpServer.listen(process.env.PORT || 3000)
-    this.socket()
-    console.log(`>> Server OK`)
+    this.httpServer.listen(this.PORT, () => {
+      console.log(`>> Server OK: litening on port ${this.PORT}`)
+      this.socket()
+    })
   }
 }
 
