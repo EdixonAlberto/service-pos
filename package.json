@@ -1,7 +1,7 @@
 {
   "name": "service-pos",
   "version": "1.0.0",
-  "description": "",
+  "description": "Micro servicio para controlar y monitorear el POS y la impresora del totem digital",
   "main": "dist/index.js",
   "author": "WIT",
   "contributors": [
