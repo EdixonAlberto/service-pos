@@ -2,7 +2,7 @@ import { POS } from 'transbank-pos-sdk'
 
 class POSService {
   private pos: POS = new POS()
-  readonly PORT = global.config.portPos
+  readonly PORT = global.config.portPOS
 
   constructor() {}
 

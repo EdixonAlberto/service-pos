@@ -13,9 +13,11 @@ export async function loadConfig(): Promise<void> {
   const ENV: NodeJS.ProcessEnv = process.env
 
   const _config: TConfig = {
-    portServer: Number(ENV.PORT_SERVER) || 5000,
-    portPos: ENV.PORT_POS || null,
-    modeDev: NODE_ENV === 'development'
+    modeDev: NODE_ENV === 'development',
+    portHTTP: Number(ENV.PORT_HTTP) || 3000,
+    portWS: Number(ENV.PORT_WEBSOCKET) || 5000,
+    portPOS: ENV.PORT_POS || null,
+    whiteList: ENV.WHITE_LIST?.split(',') || []
   }
 
   global.config = _config

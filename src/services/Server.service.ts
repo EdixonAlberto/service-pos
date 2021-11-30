@@ -1,14 +1,13 @@
 import express from 'express'
-import { createServer } from 'http'
-import { Server } from 'socket.io'
+import { Server, Socket } from 'socket.io'
 
+import { notFound, errorHandler, requestHandler, corsHandler } from '~MIDDLEWARES'
 import httpRoutes from '~ROUTES/http.routes'
-import { notFound, errorHandler } from '~MIDDLEWARES'
 
 class ServerService {
+  readonly PORT_HTTP = global.config.portHTTP
+  readonly PORT_WS = global.config.portWS
   private app = express()
-  private httpServer = createServer(this.app)
-  readonly PORT: number = Number(process.env.PORT) || 3000
 
   constructor() {
     this.middlewaresIN()
@@ -17,12 +16,9 @@ class ServerService {
   }
 
   private middlewaresIN(): void {
+    this.app.use('/', requestHandler)
+    this.app.use(corsHandler())
     this.app.use(express.json())
-
-    this.app.use('/', (req, _, next) => {
-      console.log(`>> ${req.method}: ${req.url}`)
-      next()
-    })
   }
 
   private routes(): void {
@@ -35,7 +31,7 @@ class ServerService {
   }
 
   private socket(): void {
-    const io = new Server(this.httpServer, {
+    const io = new Server(this.PORT_WS, {
       serveClient: false,
       pingInterval: 10000,
       pingTimeout: 5000,
@@ -43,13 +39,16 @@ class ServerService {
       transports: ['websocket']
     })
 
-    io.on('connection', () => {})
-    console.log(`>> WEBSOCKET: listening on ws://localhost:${this.PORT}`)
+    io.on('connection', (socket: Socket) => {
+      console.log(`>> WEB_SOCKET: client connected with id=${socket.id}`)
+      // TODO: crear rutas o eventos
+    })
+    console.log(`>> WEB_SOCKET: listening on ws://localhost:${this.PORT_WS}${io.path()}`)
   }
 
   public start(): void {
-    this.httpServer.listen(this.PORT, () => {
-      console.log(`>> SERVER_HTTP: listening on http://localhost:${this.PORT}`)
+    this.app.listen(this.PORT_HTTP, () => {
+      console.log(`>> HTTP: listening on http://localhost:${this.PORT_HTTP}`)
       this.socket()
     })
   }

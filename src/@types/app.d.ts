@@ -1,7 +1,9 @@
 type TConfig = {
-  portServer: number
-  portPos: string | null
   modeDev: boolean
+  portHTTP: number
+  portWS: number
+  portPOS: string | null
+  whiteList: string[]
 }
 
 type TEnv = 'production' | 'development'

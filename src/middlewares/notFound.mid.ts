@@ -1,8 +1,10 @@
-import { Request, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
+import { Request, NextFunction } from 'express'
 
-export function notFound(req: Request, res: Response): void {
-  res.status(StatusCodes.NOT_FOUND).json({
-    error: `Route '${req.url}' not found`
+export function notFound(req: Request, _, next: NextFunction): void {
+  req.statusCode = 404
+
+  next({
+    name: 'RouteError',
+    message: `Route '${req.originalUrl}' not found`
   })
 }
