@@ -1,4 +1,4 @@
-# TODO: escribir header
+#!/bin/sh
 
 git clone https://github.com/TransbankDevelopers/transbank-pos-sdk-web-agent.git
 cd transbank-pos-sdk-web-agent
