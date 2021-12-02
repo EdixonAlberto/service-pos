@@ -5,10 +5,8 @@ export async function loadConfig(): Promise<void> {
 
   const result = config({ path: resolve('env', `${NODE_ENV}.env`) })
 
-  if (NODE_ENV === 'development') {
-    if (result.error) throw result.error
-    else console.log('>> ENV: environment loaded successfully')
-  }
+  if (result.error) throw new Error(`!! ERROR-ENV: ${result.error.message}`)
+  else console.log(`>> ENV: environment "${NODE_ENV}" loaded successfully`)
 
   const ENV: NodeJS.ProcessEnv = process.env
 

@@ -20,8 +20,17 @@
   "scripts": {
     "test": "node test/index.js",
     "build": "tsc && tsc-alias",
-    "dev": "cross-env NODE_ENV=development nodemon -e ts -w src --exec \"npm run build && node dist\"",
-    "start": "cross-env NODE_ENV=production npm run build && pm2 start dist --name app"
+    "dev": "cross-env NODE_ENV=development nodemon --config",
+    "start": "npm run build && cross-env NODE_ENV=production pm2 start dist --name app"
+  },
+  "nodemonConfig": {
+    "ext": ".ts,.env",
+    "watch": [
+      "src",
+      "env"
+    ],
+    "verbose": false,
+    "exec": "npm run build && node dist"
   },
   "dependencies": {
     "cors": "^2.8.5",
