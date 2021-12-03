@@ -1,24 +1,20 @@
 import { exec } from 'child_process'
 
-export async function print() {
-  const COMMNAD =
-    'mkdir folder-test && touch folder-test/note.txt && echo este es un texto de prueba >> folder-test/note.txt'
-
+export async function print(command: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    exec(COMMNAD, (error, stdout, stderr) => {
+    exec(command, (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`)
         reject(error)
         return
       }
+
       if (stderr) {
         console.log(`stderr: ${stderr}`)
-        return
+        reject(stderr)
       }
 
-      console.log(`stdout: ${stdout}`)
-
-      resolve(stderr)
+      resolve(stdout)
     })
   })
 }
