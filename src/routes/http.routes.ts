@@ -3,7 +3,7 @@ import { statusController, saleController, printController } from '~CONTROLLERS'
 
 const router = Router()
 
-router.post('/', statusController)
+router.get('/', statusController)
 router.post('/newSale', saleController)
 router.post('/printVoucher', printController)
 
