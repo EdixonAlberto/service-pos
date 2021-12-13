@@ -8,9 +8,11 @@ Micro servicio para controlar y monitorear el POS y la impresora del totem digit
 
 ## Endpoints Server HTTP
 
-| Metodo | Endpoint | Body        | Descripción                                  |
-| ------ | -------- | ----------- | -------------------------------------------- |
-| POST   | /newSale | TSale[body] | Ejecutar un nuevo proceso de venta en el POS |
+| Metodo | Endpoint          | Body        | Descripción                                  |
+| ------ | ----------------- | ----------- | -------------------------------------------- |
+| GET    | /pos/             | TODO:       | Obtener el estado del servicio               |
+| POST   | /pos/newSale      | TSale[body] | Ejecutar un nuevo proceso de venta en el POS |
+| POST   | /pos/printVoucher | TODO:       | Ejecutar una impresion desde la impresara    |
 
 > TODO: falta por crear endpoints
 
@@ -31,3 +33,8 @@ cp env/.env.template env/development.env
 ```
 
 Nota: crear `production.env` para usar en producción.
+
+## Recursos
+
+- SDK Transbank para Nodejs: https://github.com/TransbankDevelopers/transbank-pos-sdk-nodejs
+- Documentación Transbank: https://www.transbankdevelopers.cl/referencia/posintegrado?l=js#mensaje-de-venta

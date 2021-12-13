@@ -2,25 +2,17 @@ import { Request, Response, NextFunction } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { resolve } from 'path'
 
-import { print } from '~UTILS/print.util'
+import { PrinterService } from '~SERVICES/Printer.service'
 
 async function printController(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const printer = ''
-  const pathText = resolve('note.txt')
+  const printerService = new PrinterService()
 
   try {
-    // const response = await print(`lp -d “${printer}” ${pathText}`) // TODO:
-    const response = await print(`lpstat -a | awk '{print $1}'`)
+    const response = await printerService.print({
+      document: resolve('note.txt')
+    })
 
-    if (response) {
-      res.status(StatusCodes.OK).json({
-        response
-      })
-    } else {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        response
-      })
-    }
+    res.status(StatusCodes.OK).json(response)
   } catch (error) {
     next(error)
   }

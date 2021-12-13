@@ -3,15 +3,15 @@ import { StatusCodes } from 'http-status-codes'
 
 async function saleController(req: Request, res: Response, next: NextFunction): Promise<void> {
   const body = req.body as TSale['body']
-
   const date: string = new Date().toLocaleString('es')
 
   try {
-    if (body.error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        error: 'error message'
+    if (body?.error) {
+      return next(<TErrorResponse>{
+        status: StatusCodes.BAD_REQUEST,
+        name: 'Request Error',
+        message: 'error message'
       })
-      return
     }
 
     res.status(StatusCodes.OK).json(<TSale['response']>{
